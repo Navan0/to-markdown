@@ -38,7 +38,7 @@ var toMarkdown = function(string) {
     {
       patterns: 'a',
       replacement: function(str, attrs, innerHTML) {
-        if (innerHTML.indexOf("<img ") >= 0) return;
+        if (innerHTML.indexOf("<img ") >= 0) return innerHTML;
         
         var href = attrs.match(attrRegExp('href')),
             title = attrs.match(attrRegExp('title'));
