@@ -38,6 +38,8 @@ var toMarkdown = function(string) {
     {
       patterns: 'a',
       replacement: function(str, attrs, innerHTML) {
+        if (innerHTML.indexOf("<img ") >= 0) return;
+        
         var href = attrs.match(attrRegExp('href')),
             title = attrs.match(attrRegExp('title'));
         return href ? '[' + innerHTML + ']' + '(' + href[1] + (title && title[1] ? ' "' + title[1] + '"' : '') + ')' : str;
@@ -68,7 +70,11 @@ var toMarkdown = function(string) {
         var src = attrs.match(attrRegExp('src')),
             alt = attrs.match(attrRegExp('alt')),
             title = attrs.match(attrRegExp('title'));
-        return '![]' + '(' + src[1] + ')';
+            
+        var srcUrl = src[1];
+        srcUrl = srcUrl.replace("http://anthonychu.ca/posts/files", "{{ site.baseurl }}/post-assets/imported");
+            
+        return '![]' + '(' + srcUrl + ')';
       }
     }
   ];
